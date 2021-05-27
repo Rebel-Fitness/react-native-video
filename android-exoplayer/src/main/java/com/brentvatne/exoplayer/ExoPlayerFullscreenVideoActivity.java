@@ -43,18 +43,36 @@ public class ExoPlayerFullscreenVideoActivity extends AppCompatActivity implemen
         // Set the fullscreen button to "close fullscreen" icon
         ImageView fullscreenIcon = playerControlView.findViewById(R.id.exo_fullscreen_icon);
         fullscreenIcon.setImageResource(R.drawable.exo_controls_fullscreen_exit);
-        playerControlView.findViewById(R.id.exo_fullscreen_button)
-                .setOnClickListener(v -> ReactExoplayerView.getViewInstance(id).setFullscreen(false));
+        
+        playerControlView.findViewById(R.id.exo_fullscreen_button).setOnClickListener(v -> {
+            try {
+                ReactExoplayerView.getViewInstance(id).setFullscreen(false);
+            } catch (Exception e) {
+                Log.e("ExoPlayer Exception, setPausedModifier(false)", e.toString());
+            }
+        });
+
         //Handling the playButton click event
         playerControlView.findViewById(R.id.exo_play).setOnClickListener(v -> {
             if (player != null && player.getPlaybackState() == Player.STATE_ENDED) {
                 player.seekTo(0);
             }
-            ReactExoplayerView.getViewInstance(id).setPausedModifier(false);
+
+            try {
+                ReactExoplayerView.getViewInstance(id).setPausedModifier(false);
+            } catch (Exception e) {
+                Log.e("ExoPlayer Exception, setPausedModifier(false)", e.toString());
+            }
         });
 
         //Handling the pauseButton click event
-        playerControlView.findViewById(R.id.exo_pause).setOnClickListener(v -> ReactExoplayerView.getViewInstance(id).setPausedModifier(true));
+        playerControlView.findViewById(R.id.exo_pause).setOnClickListener(v -> {
+            try{
+                ReactExoplayerView.getViewInstance(id).setPausedModifier(true);
+            } catch (Exception e) {
+                Log.e("ExoPlayer Exception, setPausedModifier(true)", e.toString());
+            }
+        });
     }
 
     @Override
